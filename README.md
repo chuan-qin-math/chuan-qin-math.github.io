@@ -1,2 +1,2 @@
-# chuan-qin-math.github.io
+# chuan-qin.github.io
 my personal webpage
