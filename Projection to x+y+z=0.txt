@@ -1,0 +1,67 @@
+from sage.plot.plot3d.shapes import LineSegment
+from sage.plot.plot3d.plot3d import axes
+from sage.plot.plot3d.parametric_surface import ParametricSurface
+from sage.plot.plot3d.platonic import cube
+from sage.plot.plot3d.parametric_surface import ParametricSurface
+
+
+cube=cube(center=(0.5, 0.5, 0.5), size=1, color='grey',frame_thickness=0.4, frame_color='black')
+
+
+# Define the XYZ axes
+axes = axes(scale=1, radius=0.01, color='black')
+
+
+# Define the points of the cube
+points_cube = {
+    "P0": (0, 0, 0),
+    "P1": (1, 0, 0),
+    "P2": (1, 1, 0),
+    "P3": (0, 1, 0),
+    "P4": (0, 1, 1),
+    "P5": (0, 0, 1),
+    "P6": (1, 0, 1),
+    "P7": (1, 1, 1)
+}
+
+# Define the points on the plane
+points_plane = {
+    "Q1": (2/3, -1/3, -1/3),
+    "Q2": (1/3, 1/3, -2/3),
+    "Q3": (-1/3, 2/3, -1/3),
+    "Q4": (-2/3, 1/3, 1/3),
+    "Q5": (-1/3, -1/3, 2/3),
+    "Q6": (1/3, -2/3, 1/3)
+}
+
+# Define the lines representing the segments
+segments = [
+    LineSegment(points_plane["Q1"], points_plane["Q2"], color="red"),
+    LineSegment(points_plane["Q2"], points_plane["Q3"], color="red"),
+    LineSegment(points_plane["Q3"], points_plane["Q4"], color="red"),
+    LineSegment(points_plane["Q4"], points_plane["Q5"], color="red"),
+    LineSegment(points_plane["Q5"], points_plane["Q6"], color="red"),
+    LineSegment(points_plane["Q6"], points_plane["Q1"], color="red"),
+    LineSegment(points_plane["Q1"], points_cube["P1"], linestyle='dotted', color='black', thickness=0.3),
+    LineSegment(points_plane["Q2"], points_cube["P2"], linestyle='dotted', color='black', thickness=0.3),
+    LineSegment(points_plane["Q3"], points_cube["P3"], linestyle='dotted', color='black', thickness=0.3),
+    LineSegment(points_plane["Q4"], points_cube["P4"], linestyle='dotted', color='black', thickness=0.3),
+    LineSegment(points_plane["Q5"], points_cube["P5"], linestyle='dotted', color='black', thickness=0.3),
+    LineSegment(points_plane["Q6"], points_cube["P6"], linestyle='dotted', color='black', thickness=0.3)
+
+]
+
+
+# Define the labels for the cube points
+labels_cube = {key: text3d(key, pos, color="black", scale=0.5) for key, pos in points_cube.items()}
+
+# Define the labels for the plane points
+labels_plane = {key: text3d(key, pos, color="black", scale=0.5) for key, pos in points_plane.items()}
+
+# Combine all the objects to plot
+objects_to_plot = [cube, axes] + segments + list(labels_cube.values()) + list(labels_plane.values())
+
+
+
+# Plot all the objects
+show(sum(objects_to_plot))
